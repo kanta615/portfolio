@@ -5,7 +5,6 @@
      <h1 id="title"></h1>
      <hr>
      <div id="content"></div>
-     <div id="eyecatch"></div>
      <div id="category"></div>
    </main>
    <script>
@@ -18,7 +17,6 @@
        .then(json => {
          document.getElementById("title").innerHTML = json.title;
          document.getElementById("content").innerHTML = json.content;
-         document.getElementById("eyecatch").innerHTML = json.eyecatch;
          document.getElementById("category").innerHTML = json.category;
        })
   </script>
