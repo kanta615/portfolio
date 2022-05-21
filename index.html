@@ -8,33 +8,19 @@
      <div id="eyecatch"></div>
      <div id="category"></div>
    </main>
-
-   fetch("https://cayemanfan.microcms.io/api/v1//blogs", {
+   <script>
+     fetch("https://cayemanfan.microcms.io/api/v1/blogs/11fe_hrpb63", {
        headers: {
-           "X-API-KEY": "5951b73985eb44e7b26cea3ec0fc0d837691"
+         "X-API-KEY": "5951b73985eb44e7b26cea3ec0fc0d837691"
        }
-   })
-   .then(function(res) {
-       return res.json();
-   })
-   .then(function(json) {
-       var fragment = document.createDocumentFragment();
-       for (var i = 0; i < json.contents.length; i++) {
-           // titleの取得
-           var title = document.createElement('h2');
-           title.textContent = json.contents[i].title;
-
-           // bodyの取得
-           var body = document.createElement('div');
-           body.innerHTML = json.contents[i].body;
-
-           var item = document.createElement('div');
-           item.appendChild(title);
-           item.appendChild(body);
-           fragment.appendChild(item);
-       }
-       document.getElementById('list').appendChild(fragment);
-   })
-
+     })
+       .then(res => res.json())
+       .then(json => {
+         document.getElementById("title").innerHTML = json.title;
+         document.getElementById("content").innerHTML = json.content;
+         document.getElementById("eyecatch").innerHTML = json.content;
+         document.getElementById("category").innerHTML = json.content;
+       })
+  </script>
  </body>
 </html>
