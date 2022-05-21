@@ -5,6 +5,8 @@
      <h1 id="title"></h1>
      <hr>
      <div id="content"></div>
+     <div id="eyecatch"></div>
+     <div id="category"></div>
    </main>
    <script>
      fetch("https://cayemanfan.microcms.io/api/v1/blogs/11fe_hrpb63", {
@@ -16,6 +18,8 @@
        .then(json => {
          document.getElementById("title").innerHTML = json.title;
          document.getElementById("content").innerHTML = json.content;
+         document.getElementById("eyecatch").innerHTML = json.content;
+         document.getElementById("category").innerHTML = json.content;
        })
   </script>
  </body>
