@@ -1,14 +1,44 @@
-<!DOCTYPE html>
-<html lang="ja">
- <body>
-   <main>
-     <h1 id="title"></h1>
-     <hr>
-     <div id="content"></div>
-   </main>
+<html>
+  <head>
+    <title>microCMSで取得したデータをテンプレートエンジンを使って表示する</title>
+  </head>
+  <body>
+    <div id="result" />
 
-$curl "https://cayemanfan.microcms.io/api/v1/blogs?limit=3" -H "X-MICROCMS-API-KEY: 5951b73985eb44e7b26cea3ec0fc0d837691"
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js" type="text/javascript"></script>
 
+    <script type="text/x-handlebars-template" id="news-template">
+    {{#each data}}
+      <dl class="list">
+        <dt class="title">{{title}}</dt>
+        <dd class="timestamp">{{publishedTime}}</dd>
+      </dl>
+    {{/each}}
+    </script>
 
- </body>
+    <script>
+    window.onload = function() {
+      $.ajax({
+        url: 'https://cayemanfan.microcms.io/api/v1/blogs',
+        type: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-MICROCMS-API-KEY': '5951b73985eb44e7b26cea3ec0fc0d837691'
+        },
+      })
+      .done(function(data) {
+        var source = $('#news-template').html();
+        var template = Handlebars.compile(source);
+        var html = template({
+          data: data.contents
+        });
+        $('#result').html(html);
+      });
+    };
+    </script>
+  </body>
 </html>
