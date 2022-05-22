@@ -6,17 +6,9 @@
      <hr>
      <div id="content"></div>
    </main>
-   <script>
-     fetch("https://cayemanfan.microcms.io/api/v1/blogs/11fe_hrpb63", {
-       headers: {
-         "X-MICROCMS-API-KEY": "5951b73985eb44e7b26cea3ec0fc0d837691"
-       }
-     })
-       .then(res => res.json())
-       .then(json => {
-         document.getElementById("title").innerHTML = json.title;
-         document.getElementById("content").innerHTML = json.content;
-       })
-  </script>
+
+$curl "https://cayemanfan.microcms.io/api/v1/blogs?limit=3" -H "X-MICROCMS-API-KEY: 5951b73985eb44e7b26cea3ec0fc0d837691"
+
+
  </body>
 </html>
