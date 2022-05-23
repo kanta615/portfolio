@@ -34,8 +34,8 @@
             //タイトル
             const title = "<h2>" + content.title + "</h2>";
             //画像1
-            const eyecatch = content.image01 && content.image01.url;
-            const disp_img01 = img01 && "<img src='" + img01 + "?w=300'>";
+            const eyecatch = content.eyecatch && content.eyecatch.url;
+            const disp_eyecatch = eyecatch && "<img src='" + eyecatch + "?w=300'>";
 
             //表示部分
             $("#content").append(
