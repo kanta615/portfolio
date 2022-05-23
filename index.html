@@ -2,43 +2,90 @@
   <head>
     <title>microCMSで取得したデータをテンプレートエンジンを使って表示する</title>
   </head>
+
+
   <body>
-    <div id="result" />
+    <div class="l-container">
+      <h1 class="ttl-news">お知らせ</h1>
 
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js" type="text/javascript"></script>
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
-    <script type="text/x-handlebars-template" id="news-template">
-    {{#each data}}
-      <dl class="list">
-        <dt class="title">{{title}}</dt>
-        <dd class="title">{{eyecatch}}</dd>
-      </dl>
-    {{/each}}
-    </script>
+  <script>
+    $(document).ready(function() {
 
-    <script>
-    window.onload = function() {
-      $.ajax({
-        url: 'https://cayemanfan.microcms.io/api/v1/blogs',
-        type: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-MICROCMS-API-KEY': '5951b73985eb44e7b26cea3ec0fc0d837691'
-        },
-      })
-      .done(function(data) {
-        var source = $('#news-template').html();
-        var template = Handlebars.compile(source);
-        var html = template({
-          data: data.contents
+      //1ページに表示したい記事の数
+      const limit = 4;
+
+      const page =
+        parseInt(new URLSearchParams(window.location.search).get("page")) || 1;
+      const offset = limit * (page - 1);
+
+      fetch(
+          `https://cayemanfan.microcms.io/api/v1/blogs?fields=title,eyecatch&limit=${limit}&offset=${offset}`,
+          {
+            headers: {
+              "X-API-KEY": "5951b73985eb44e7b26cea3ec0fc0d837691"
+            }
+          }
+        )
+        .then(response => response.json())
+        .then(json => {
+          for (const content of json.contents) {
+            //タイトル
+            const title = "<h2>" + content.title + "</h2>";
+            //画像1
+            const eyecatch = content.image01 && content.image01.url;
+            const disp_img01 = img01 && "<img src='" + img01 + "?w=300'>";
+
+            //表示部分
+            $("#content").append(
+              '<article class="article">' +
+              title +
+              (disp_img01 || "") +
+
+              "</article>"
+            );
+          }
+
+          //========================
+          //ページング
+          const totalCount = json.totalCount;
+          const pageCount = Math.ceil(totalCount / limit);
+          const pager = `<ul>${
+          //前のページリンクを表示
+          page >= 2
+            ? `<li><a href='./index.html?page=${page -
+                1}'>前のページへ</a></li>`
+            : ""
+        }${
+          //必要なページを表示
+          Array.from(Array(pageCount))
+            .map((noValue, index) => {
+              const targetPage = index + 1;
+              return targetPage === page
+                ? `<li>${index + 1}</li>`
+                : `<li><a href='./index.html?page=${index + 1}'>${index +
+                    1}</a></li>`;
+            })
+            .join("\n")
+        }${
+          //次のページリンクを表示
+          page < pageCount
+            ? `<li><a href='./index.html?page=${page +
+                1}'>次のページへ</a></li>`
+            : ""
+        }</ul>`;
+          $("#content").append(pager);
+          //========================
+        })
+        .catch(e => {
+          console.log(e.message);
         });
-        $('#result').html(html);
-      });
-    };
-    </script>
+    });
+  </script>
+
+  <div id="content"></div>
+
+
   </body>
 </html>
