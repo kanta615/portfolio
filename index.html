@@ -25,7 +25,7 @@
            //microCMSからコンテンツ取得
            fetch(
              //★設定した項目
-               `https://cayemanfan.microcms.io/api/v1/blogs?fields=title,image01&limit=${limit}&offset=${offset}`,
+               `https://cayemanfan.microcms.io/api/v1/blogs?fields=title,img01&limit=${limit}&offset=${offset}`,
                {
                  headers: {
                    //★APIキー
@@ -40,8 +40,8 @@
                  const title = "<h2>" + content.title + "</h2>";
 
                  //画像1
-                 const img01 = content.image01 && content.image01.url;
-                 const disp_img01 = img01 && "<img src='" + img01 + "?w=300'>";
+                 const img01 = content.img01 && content.img01.url;
+                 const disp_img01 = img01 && "<img src='" + img01 + "?w=200'>";
 
                  //表示部分
                  $("#content").append(
