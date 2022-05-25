@@ -12,7 +12,7 @@
        <script>
          $(document).ready(function() {
            //========================
-           //【ページングに必要な情報】 MICROCMS＝KEY
+           //【ページングに必要な情報】 一からコピー
 
            //★1ページに表示したい記事の数
            const limit = 5;
@@ -48,9 +48,7 @@
                  $("#content").append(
                    '<article class="article">' +
                    title +
-                   date +
                    (disp_img01 || "") +
-                   text +
                    "</article>"
                  );
                }
