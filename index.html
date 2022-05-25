@@ -1,9 +1,9 @@
+<html>
 <head>
      <title>microCMSで取得したデータをテンプレートエンジンを使って表示する</title>
    </head>
 
    <body>
-
      <div class="l-container">
        <h1 class="ttl-news">お知らせ</h1>
        <p class="txt-leader">このページは<a href="https://microcms.io/" target="_blank" rel="noopener">microCMS</a>を使った「お知らせ」のサンプルページです。</p>
@@ -12,10 +12,10 @@
        <script>
          $(document).ready(function() {
            //========================
-           //【ページングに必要な情報】
+           //【ページングに必要な情報】 一からコピー
 
            //★1ページに表示したい記事の数
-           const limit = 4;
+           const limit = 5;
 
            const page =
              parseInt(new URLSearchParams(window.location.search).get("page")) || 1;
@@ -39,15 +39,18 @@
                  //タイトル
                  const title = "<h2>" + content.title + "</h2>";
 
+
                  //画像1
                  const img01 = content.image01 && content.image01.url;
-                 const disp_img01 = img01 && "<img src='" + img01 + "?w=200'>";
+                 const disp_img01 = img01 && "<img src='" + img01 + "?w=300'>";
 
                  //表示部分
                  $("#content").append(
                    '<article class="article">' +
                    title +
+                   date +
                    (disp_img01 || "") +
+                   text +
                    "</article>"
                  );
                }
@@ -95,5 +98,7 @@
      </div>
 
    </body>
+
+
 
  </html>
