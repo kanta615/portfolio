@@ -35,9 +35,9 @@
              )
              .then(response => response.json())
              .then(json => {
-               for (const content of json.contents) {
+               for (const content of json.links) {
                  //タイトル
-                 const title = "<h2>" + content.title + "</h2>";
+                 const title = "<h2>" + content.links + "</h2>";
 
 
                  //画像1
